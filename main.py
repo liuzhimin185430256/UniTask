@@ -521,7 +521,7 @@ def main(event, context):
         if client != False:
             getIntegral()
             daySign_task(user['username'])
-            dayOneG_Task()
+            #dayOneG_Task()
             luckDraw_task()
             if ('lotteryNum' in user):
                 pointsLottery_task(user['lotteryNum'])
