@@ -68,6 +68,8 @@ def daySign_task(username):
         client.headers.pop('referer')
         doubleAd.encoding='utf-8'
         res1 = daySign.json()
+        logging.info(res1)
+        logging.info(res2)
         res2 = doubleAd.json()
         if res1['status'] == '0000':
             logging.info('【每日签到】: ' + '打卡成功,' + res2['data']['statusDesc'])
