@@ -27,7 +27,7 @@ def woTree_task():
         for flow in flowList:
             takeFlow = client.get('https://m.client.10010.com/mactivity/flowData/takeFlow.htm?flowId=' + flow['id'])
             takeFlow.encoding='utf-8'
-            res1 = takeFlow.json()
+            res1 = takeFlow.replace("'***","',").replace("***"，"").json()
             if res1['code'] == '0000':
                 logging.info('【沃之树-领流量】: 4M流量 x' + str(num))
             else:
@@ -39,7 +39,7 @@ def woTree_task():
         #浇水
         grow = client.post('https://m.client.10010.com/mactivity/arbordayJson/arbor/3/0/3/grow.htm')
         grow.encoding='utf-8'
-        res2 = grow.json()
+        res2 = grow.replace("'***","',").replace("***"，"").json()
         logging.info('【沃之树-浇水】: 获得' + str(res2['data']['addedValue']) + '培养值')
         time.sleep(1)
     except Exception as e:
@@ -67,9 +67,9 @@ def daySign_task(username):
         doubleAd = client.post('https://act.10010.com/SigninApp/signin/bannerAdPlayingLogo')
         client.headers.pop('referer')
         doubleAd.encoding='utf-8'
-        res1 = daySign.json()
+        res1 = daySign.replace("'***","',").replace("***"，"").json()
         logging.info(res1)
-        res2 = doubleAd.json()
+        res2 = doubleAd.replace("'***","',").replace("***"，"").json()
         if res1['status'] == '0000':
             logging.info('【每日签到】: ' + '打卡成功,' + res2['data']['statusDesc'])
         elif res1['status'] == '0002':
@@ -100,7 +100,7 @@ def luckDraw_task():
         for i in range(3):
             luck = client.post('https://m.client.10010.com/dailylottery/static/doubleball/choujiang?usernumberofjsp=' + numjsp)
             luck.encoding='utf-8'
-            res = luck.json()
+            res = luck.replace("'***","',").replace("***"，"").json()
             logging.info('【天天抽奖】: ' + res['RspMsg'] + ' x' + str(i+1))
             #等待1秒钟
             time.sleep(1)
@@ -132,7 +132,7 @@ def gameCenterSign_Task(username):
         #进行游戏中心签到
         gameCenter = client.post('https://m.client.10010.com/producGame_signin', data=data1)
         gameCenter.encoding = 'utf-8'
-        res1 = gameCenter.json()
+        res1 = gameCenter.replace("'***","',").replace("***"，"").json()
         if res1['respCode'] == '0000' and res1['respDesc'] == '打卡并奖励成功':
             logging.info('【游戏中心签到】: ' + '获得' + str(res1['currentIntegral']) + '积分')
         elif res1['respCode'] == '0000':
@@ -141,7 +141,7 @@ def gameCenterSign_Task(username):
         #游戏频道积分
         gameCenter_exp = client.post('https://m.client.10010.com/producGameApp',data=data2)
         gameCenter_exp.encoding='utf-8'
-        res2 = gameCenter_exp.json()
+        res2 = gameCenter_exp.replace("'***","',").replace("***"，"").json()
         if res2['code'] == '0000':
             logging.info('【游戏频道打卡】: 获得' + str(res2['integralNum']) + '积分')
         else:
@@ -189,7 +189,7 @@ def openBox_task():
         time.sleep(1)
         watchAd = client.post('https://m.client.10010.com/game_box', data=data3)
         drawReward.encoding='utf-8'
-        res = drawReward.json()
+        res = drawReward.replace("'***","',").replace("***"，"").json()
         if res['code'] == '0000':
             logging.info('【100M寻宝箱】: ' + '获得100M流量')
         else:
@@ -216,7 +216,7 @@ def collectFlow_task():
             #看视频
             watchVideo = client.post('https://act.10010.com/SigninApp/mySignin/addFlow',data1)
             watchVideo.encoding='utf-8'
-            res1 = watchVideo.json()
+            res1 = watchVideo.replace("'***","',").replace("***"，"").json()
             if res1['reason'] == '00':
                 logging.info('【4G流量包-看视频】: 获得' + res1['addNum'] + 'M流量 x' + str(i+1))
             elif res1['reason'] == '01':
@@ -226,7 +226,7 @@ def collectFlow_task():
             #下软件
             downloadProg = client.post('https://act.10010.com/SigninApp/mySignin/addFlow',data2)
             downloadProg.encoding='utf-8'
-            res2 = downloadProg.json()
+            res2 = downloadProg.replace("'***","',").replace("***"，"").json()
             if res2['reason'] == '00':
                 logging.info('【4G流量包-下软件】: 获得' + res2['addNum'] + 'M流量 x' + str(i+1))
             elif res2['reason'] == '01':
@@ -246,7 +246,7 @@ def day100Integral_task():
     try:
         integral = client.post('https://m.client.10010.com/welfare-mall-front/mobile/integral/gettheintegral/v1', data=data)
         integral.encoding = 'utf-8'
-        res = integral.json()
+        res = integral.replace("'***","',").replace("***"，"").json()
         logging.info("【100定向积分】: " + res['msg'])
         time.sleep(1)
     except Exception as e:
@@ -262,7 +262,7 @@ def pointsLottery_task(n):
         #每日首次免费
         oneFree = client.post('https://m.client.10010.com/dailylottery/static/integral/choujiang?usernumberofjsp=' + numjsp)
         oneFree.encoding = 'utf-8'
-        res1 = oneFree.json()
+        res1 = oneFree.replace("'***","',").replace("***"，"").json()
         logging.info("【积分抽奖】: " + res1['RspMsg'] + ' x免费')
         #如果用户未设置此值，将不会自动抽奖
         #预防用户输入30以上，造成不必要的抽奖操作
@@ -292,11 +292,11 @@ def dongaoPoints_task():
         #领取积分奖励
         dongaoPoint = client.post('https://m.client.10010.com/welfare-mall-front/mobile/winterTwo/getIntegral/v1', data=data)
         dongaoPoint.encoding = 'utf-8'
-        res1 = dongaoPoint.json()
+        res1 = dongaoPoint.replace("'***","',").replace("***"，"").json()
         #查询领了多少积分
         dongaoNum = client.post('https://m.client.10010.com/welfare-mall-front/mobile/winterTwo/winterTwoShop/v1', data=data)
         dongaoNum.encoding = 'utf-8'
-        res2 = dongaoNum.json()
+        res2 = dongaoNum.replace("'***","',").replace("***"，"").json()
         #领取成功
         if res1['resdata']['code'] == '0000':
             #当前为连续签到的第几天
@@ -323,8 +323,8 @@ def dayOneG_Task():
         getPrize = client.post('https://act.10010.com/SigninApp/doTask/getPrize')
         getPrize.encoding = 'utf-8'
         client.post('https://act.10010.com/SigninApp/doTask/getTaskInfo')
-        res1 = getTaskInfo.json()
-        res2 = getPrize.json()
+        res1 = getTaskInfo.replace("'***","',").replace("***"，"").json()
+        res2 = getPrize.replace("'***","',").replace("***"，"").json()
         if(res1['data']['taskInfo']['status'] == '1'):
             logging.info('【1G流量日包】: ' + res2['data']['statusDesc'])
         else:
